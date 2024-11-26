@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Tracker</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8fbfe;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 15px 20px;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-title {
+      font-size: 24px;
+      color: #2d5ac4;
+      font-weight: bold;
+    }
+
+    .month-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .month-buttons button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #eef3ff;
+      color: #2d5ac4;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .month-buttons button:hover {
+      background-color: #cde2ff;
+    }
+
+    .month-buttons button.active {
+      background-color: #2d5ac4;
+      color: white;
+    }
+
+    .dashboard {
+      display: flex;
+      height: calc(100vh - 60px);
+    }
+
+    .sidebar {
+      width: 150px;
+      background: #ffffff;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #eef3ff;
+      color: #2d5ac4;
+    }
+
+    .main-content {
+      display: flex;
+      flex: 1;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .calendar-container {
+      flex: 1;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .calendar-container h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .calendar-view {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+
+    .calendar-view div {
+      text-align: center;
+      padding: 10px;
+      background-color: #eef3ff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .calendar-view div:hover {
+      background-color: #cde2ff;
+    }
+
+    .details-container {
+      flex: 2;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .details-container h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .details-container p {
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-title">Health Tracker Dashboard</div>
+    <div class="month-buttons">
+      <button class="active" data-month="1">1</button>
+      <button data-month="2">2</button>
+      <button data-month="3">3</button>
+      <button data-month="4">4</button>
+      <button data-month="5">5</button>
+      <button data-month="6">6</button>
+      <button data-month="7">7</button>
+      <button data-month="8">8</button>
+      <button data-month="9">9</button>
+      <button data-month="10">10</button>
+      <button data-month="11">11</button>
+      <button data-month="12">12</button>
+    </div>
+  </header>
+  <div class="dashboard">
+    <div class="sidebar">
+      <a href="#">Profile</a>
+      <a href="#">Report</a>
+      <a href="#">Settings</a>
+      <a href="#">Logout</a>
+    </div>
+    <div class="main-content">
+      <div class="calendar-container">
+        <h3>Month 1</h3>
+        <div class="calendar-view">
+          <!-- Calendar dates will be dynamically generated -->
+        </div>
+      </div>
+      <div class="details-container">
+        <h3>Details</h3>
+        <p>interactive lab results showing in monthly dashboard coming soon</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // (temporary, maybe look for js code for 2025 year later) Generate calendar for a given month
+    function generateCalendar(month) {
+      const calendarView = document.querySelector('.calendar-view');
+      const detailsContainer = document.querySelector('.details-container');
+      calendarView.innerHTML = ''; // Clear existing calendar
+      detailsContainer.innerHTML = `<h3>Month ${month}</h3>
+          <p>Interactive lab results showing in monthly dashboard coming soon</p>`;
+
+      for (let day = 1; day <= 30; day++) { // (Temporary) assume 30 days for simplicity
+        const dayElement = document.createElement('div');
+        dayElement.textContent = day;
+        dayElement.addEventListener('click', () => showDetails(day, month));
+        calendarView.appendChild(dayElement);
+      }
+    }
+
+    // Show details for a specific day
+    function showDetails(day, month) {
+      const detailsContainer = document.querySelector('.details-container');
+      detailsContainer.innerHTML = `<h3>Details for ${month}/${day}</h3>
+          <p>Symptoms & BP textbox coming soon!</p>`;
+    }
+
+    // Handle month button clicks
+    const monthButtons = document.querySelectorAll('.month-buttons button');
+    monthButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelector('.month-buttons button.active').classList.remove('active');
+        button.classList.add('active');
+
+        const month = button.dataset.month;
+        document.querySelector('.calendar-container h3').textContent = `Month ${month}`;
+        generateCalendar(month);
+      });
+    });
+
+    // Initialize with month 1
+    generateCalendar(1);
+  </script>
+
+</body>
+</html>
